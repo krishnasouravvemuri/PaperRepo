@@ -1,0 +1,69 @@
+{% extends "template.html" %}
+
+{% block title %}PaperRepo | Home{% endblock %}
+
+{% block content %}
+
+<!-- Hero / Welcome Section -->
+<section class="max-w-5xl mx-auto mt-16 p-8 bg-[#1c1b29] rounded-2xl shadow-2xl text-gray-100">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-teal-400 mb-6 text-center">
+        Welcome to PaperRepo
+    </h1>
+    <p class="text-gray-300 text-lg mb-4 leading-relaxed text-center">
+        Your ultimate destination for academic resources! PaperRepo provides a vast collection of materials to help you excel in every subject. From past question papers to important questions and comprehensive notes, we've got everything you need in one place.
+    </p>
+    <p class="text-gray-300 text-lg mb-6 leading-relaxed text-center">
+        Designed for students who want to study smarter, not harder. Find exactly what you need quickly and focus on learning, not searching.
+    </p>
+    <div class="flex justify-center">
+        <a href="{% url 'PapersHome' %}" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 px-6 rounded-lg transition">
+            Browse Resources →
+        </a>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="max-w-5xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Question Papers -->
+    <div class="bg-[#1c1b29] p-6 rounded-2xl shadow-lg text-center">
+        <h2 class="text-teal-400 text-2xl font-bold mb-3">Question Papers</h2>
+        <p class="text-gray-300 leading-relaxed">
+            Access past question papers for every subject. Practice with real exam questions and get familiar with the format to improve your performance.
+        </p>
+    </div>
+    <!-- Important Questions -->
+    <div class="bg-[#1c1b29] p-6 rounded-2xl shadow-lg text-center">
+        <h2 class="text-teal-400 text-2xl font-bold mb-3">Important Questions</h2>
+        <p class="text-gray-300 leading-relaxed">
+            Focus on what matters most! We provide curated lists of important questions that are frequently asked in exams to help you study efficiently.
+        </p>
+    </div>
+    <!-- Notes / PDFs / PPTs -->
+    <div class="bg-[#1c1b29] p-6 rounded-2xl shadow-lg text-center">
+        <h2 class="text-teal-400 text-2xl font-bold mb-3">Notes & PDFs</h2>
+        <p class="text-gray-300 leading-relaxed">
+            Comprehensive notes, presentations, and PDFs for every topic. Study at your own pace and have all your resources in one easy-to-access location.
+        </p>
+    </div>
+</section>
+
+<!-- Why Use PaperRepo Section -->
+<section class="max-w-5xl mx-auto mt-12 p-8 bg-[#1c1b29] rounded-2xl shadow-2xl text-gray-100">
+    <h2 class="text-3xl text-teal-400 font-bold mb-4 text-center">Why Choose PaperRepo?</h2>
+    <ul class="list-disc list-inside text-gray-300 space-y-2 text-lg">
+        <li>All-in-one platform for academic resources.</li>
+        <li>Curated content for every subject and semester.</li>
+        <li>Easy to browse, search, and download materials.</li>
+        <li>Helps you save time and study more efficiently.</li>
+        <li>Free access to past papers, important questions, and notes.</li>
+    </ul>
+</section>
+
+<!-- Call-to-Action -->
+<section class="max-w-5xl mx-auto mt-12 text-center">
+    <a href="{% url 'login' %}" class = "mb-4 inline-block bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 px-8 rounded-lg text-lg transition">
+        Upload and help others ? 
+    </a>
+</section>
+
+{% endblock %}

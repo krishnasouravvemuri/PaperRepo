@@ -1,0 +1,41 @@
+{% extends "template.html" %}
+
+{% block title %}PaperRepo | Edit Important Topic{% endblock %}
+
+{% block navbar_right %}
+    <a href="{% url 'UploadHome' username=username %}" class="hover:text-teal-300">Home</a>
+    <a href="{% url 'MyUploads' username=username %}" class="hover:text-teal-300">My Uploads</a>
+    <a href="{% url 'home' %}" class="hover:text-red-400">Logout</a>
+{% endblock %}
+
+{% block navbar_right_mobile %}
+    <a href="{% url 'UploadHome' username=username %}" class="hover:text-teal-300 block text-right">Home</a>
+    <a href="{% url 'MyUploads' username=username %}" class="hover:text-teal-300 block text-right">My Uploads</a>
+    <a href="{% url 'home' %}" class="hover:text-red-400 block text-right">Logout</a>
+{% endblock %}
+
+{% block container_class %}flex flex-col justify-center items-center px-4 sm:px-6{% endblock %}
+
+{% block content %}
+<h1 class="text-xl sm:text-2xl mb-4 text-gray-100 text-center">Edit Important Topic:</h1>
+<div class="w-full max-w-md mb-6 p-6 sm:p-8 border border-gray-700 rounded-2xl bg-[#1e1e2e] shadow-2xl">
+    <form method="POST" class="flex flex-col space-y-4" 
+          onsubmit="return confirm('Are you sure you want to update this Important Topic?');">
+        {% csrf_token %}
+        <label>Subject Name</label>
+        <input name="subject_name" type="text" value="{{ object.subject_name }}" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <label>Subject Code</label>
+        <input name="subject_code" type="text" value="{{ object.subject_code }}" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <label>Exam Type</label>
+        <select name="exam_type" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option disabled>Choose</option>
+            <option value="CAT I" {% if object.exam_type == 'CAT I' %}selected{% endif %}>CAT I</option>
+            <option value="CAT II" {% if object.exam_type == 'CAT II' %}selected{% endif %}>CAT II</option>
+            <option value="FAT" {% if object.exam_type == 'FAT' %}selected{% endif %}>FAT</option>
+        </select>
+        <label>Faculty Name</label>
+        <input name="faculty_name" type="text" value="{{ object.faculty_name }}" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <button type="submit" class="mt-3 bg-emerald-600 text-white cursor-pointer py-3 rounded-lg font-semibold hover:bg-emerald-500 transition">Update</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "template.html" %}
+
+{% block title %}PaperRepo | Upload Home{% endblock %}
+
+{% block navbar_right %}
+    <!-- Desktop navbar links -->
+    <a href="{% url 'UploadHome' username %}" class="hover:text-teal-300">Home</a>
+    <a href="{% url 'MyUploads' username %}" class="hover:text-teal-300">My Uploads</a>
+    <a href="{% url 'home' %}" class="hover:text-red-400">Logout</a>
+{% endblock %}
+
+{% block navbar_right_mobile %}
+    <!-- Mobile menu links -->
+    <a href="{% url 'UploadHome' username %}" class="hover:text-teal-300 block text-right">Home</a>
+    <a href="{% url 'MyUploads' username %}" class="hover:text-teal-300 block text-right">My Uploads</a>
+    <a href="{% url 'home' %}" class="hover:text-red-400 block text-right">Logout</a>
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-3xl">Welcome {{ username }}</h1>
+<h1 class="text-xl mt-4">Contribute here:</h1>
+
+<div class="flex justify-center mt-8">
+    <div class="w-[28rem] max-w-full p-8 border border-gray-700 rounded-2xl bg-[#1e1e2e] shadow-2xl">
+        <ul class="space-y-6">
+            <li>
+                <a href="{% url 'QuestionPapersUpload' %}" 
+                   class="text-xl bg-emerald-600 p-4 rounded-2xl hover:bg-emerald-500 block text-center">
+                    Question Papers →
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'ImportantTopicsUpload' %}" 
+                   class="text-xl bg-emerald-600 p-4 rounded-2xl hover:bg-emerald-500 block text-center">
+                    Important Topics →
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'notesUpload' %}" 
+                   class="text-xl bg-emerald-600 p-4 rounded-2xl hover:bg-emerald-500 block text-center">
+                    Study Materials →
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

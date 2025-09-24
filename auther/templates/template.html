@@ -1,0 +1,150 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PaperRepo{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% tailwind_css %}
+</head>
+
+<body class="bg-gradient-to-br from-[#151320] to-[#100d18] text-gray-100 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full top-0 z-30 bg-gradient-to-r from-[#221c35] to-[#1c1530] border-b border-teal-500/30 shadow-lg shadow-black/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+
+                <!-- Logo (Left) -->
+                <a href="/" class="text-2xl font-extrabold text-teal-400 hover:text-teal-300 transition">PaperRepo</a>
+
+                <!-- Desktop Links (Right) -->
+                <div class="hidden md:flex flex-1 justify-end items-center space-x-4">
+                    {% block navbar_right %}
+                        <a href="{% url 'login' %}" class="hover:text-teal-300">Upload</a>
+                        <a href="{% url 'PapersHome' %}" class="hover:text-teal-300">Browse Resources</a>
+                    {% endblock %}
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="menu-toggle" aria-controls="mobile-menu" aria-expanded="false"
+                        class="md:hidden text-gray-300 hover:text-teal-400 focus:outline-none">
+                    ☰
+                </button>
+
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden flex-col space-y-2 p-4 bg-[#1c1b29] border-t border-[#2a2235] shadow-md">
+            {% block navbar_right_mobile %}
+                <a href="{% url 'login' %}" class="hover:text-teal-300 block text-right">Upload</a>
+                <a href="{% url 'PapersHome' %}" class="hover:text-teal-300 block text-right">Browse Resources</a>
+            {% endblock %}
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% if messages %}
+    <div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 flex flex-col gap-2">
+        {% for message in messages %}
+            <div 
+                class="flash-message opacity-0 transform -translate-y-2 px-6 py-3 rounded-lg shadow-lg text-white font-semibold transition-all duration-500
+                    {% if message.tags == 'success' %} bg-green-500 {% elif message.tags == 'error' %} bg-red-500
+                    {% elif message.tags == 'warning' %} bg-orange-500 {% elif message.tags == 'info' %} bg-blue-500
+                    {% else %} bg-gray-800 {% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach((msg, index) => {
+                setTimeout(() => {
+                    msg.classList.remove('opacity-0', '-translate-y-2');
+                    msg.classList.add('opacity-100', 'translate-y-0');
+                }, 100 + index * 100);
+
+                setTimeout(() => {
+                    msg.classList.remove('opacity-100', 'translate-y-0');
+                    msg.classList.add('opacity-0', '-translate-y-2');
+                }, 3000);
+
+                setTimeout(() => {
+                    msg.remove();
+                }, 3500);
+            });
+        });
+    </script>
+    {% endif %}
+
+    <!-- Page Content -->
+    <main class="flex-grow pt-20">
+        <div class="{% block container_class %}max-w-7xl mx-auto px-4 sm:px-6 lg:px-8{% endblock %}">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+<footer class="bg-gradient-to-r from-[#221c35] to-[#1c1530] border-t border-teal-500/30 shadow-inner shadow-black/40 py-8 mt-auto">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+
+    <!-- Branding -->
+    <p class="text-gray-400 text-sm">
+      Made with <span class="text-red-400">❤️</span> by Sourav
+    </p>
+
+    <!-- Links with Icons -->
+<div class="flex space-x-6 text-sm">
+  <a href="https://sou-portfolio.netlify.app/" target="_blank" rel="noopener noreferrer" 
+     class="flex items-center gap-2 text-gray-300 hover:text-teal-300 transition-transform transform hover:scale-110 duration-300">
+    <!-- Portfolio Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2l9 4.5v11L12 22l-9-4.5v-11L12 2zm0 2.2L5 7v10l7 3.5 7-3.5V7l-7-2.8z"/>
+    </svg>
+    Portfolio
+  </a>
+  
+  <a href="https://www.linkedin.com/in/vemuri-krishna-sourav-ba8403252/" target="_blank" rel="noopener noreferrer" 
+     class="flex items-center gap-2 text-gray-300 hover:text-teal-300 transition-transform transform hover:scale-110 duration-300">
+    <!-- LinkedIn Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19 0h-14C2.2 0 0 2.2 0 5v14c0 2.8 2.2 5 5 5h14c2.8 0 5-2.2 5-5V5c0-2.8-2.2-5-5-5zM8 19H5V9h3v10zM6.5 7.5C5.7 7.5 5 6.8 5 6s.7-1.5 1.5-1.5S8 5.2 8 6s-.7 1.5-1.5 1.5zM20 19h-3v-5.5c0-1.4-.6-2.5-2-2.5s-2 .9-2 2.4V19h-3V9h3v1.4c.6-.9 1.7-1.4 3-1.4 2.2 0 4 1.4 4 4.5V19z"/>
+    </svg>
+    LinkedIn
+  </a>
+  
+  <a href="https://github.com/krishnasouravvemuri/" target="_blank" rel="noopener noreferrer" 
+     class="flex items-center gap-2 text-gray-300 hover:text-teal-300 transition-transform transform hover:scale-110 duration-300">
+    <!-- GitHub Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.6-1.5-1.5-1.9-1.5-1.9-1.2-.8.1-.8.1-.8 1.3.1 2 1.3 2 1.3 1.1 2 2.9 1.4 3.6 1.1.1-.8.4-1.4.7-1.7-2.6-.3-5.3-1.3-5.3-5.9 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.6-2.7 5.6-5.3 5.9.4.3.8 1 .8 2v3c0 .3.2.7.8.6A10.9 10.9 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/>
+    </svg>
+    GitHub
+  </a>
+</div>
+
+
+  </div>
+</footer>
+
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuToggle = document.getElementById("menu-toggle");
+            const mobileMenu = document.getElementById("mobile-menu");
+
+            menuToggle.addEventListener("click", () => {
+                const isHidden = mobileMenu.classList.toggle("hidden");
+                menuToggle.setAttribute("aria-expanded", !isHidden);
+            });
+        });
+    </script>
+
+</body>
+</html>

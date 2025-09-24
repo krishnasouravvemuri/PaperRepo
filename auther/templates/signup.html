@@ -1,0 +1,33 @@
+{% extends "template.html" %}
+
+{% block title %} PaperRepo | Signup {% endblock  %}
+
+{% block container_class %}flex justify-center items-center{% endblock %}
+
+{% block content %}
+
+    <div id = "SignupForm" class = "w-[28rem] max-w-full p-8 mb-4 border border-gray-700 rounded-2xl bg-[#1e1e2e] shadow-2xl ">
+        <h1 class = "text-2xl mb-4 text-center font-semibold">Welcome! Pls signup</h1>
+        <form method="POST" class="flex flex-col space-y-5" action = "{% url 'signup' %}">
+        {% csrf_token %}
+        <!-- Name -->
+        <label>Name : </label>
+        <input name = "username" required type = "text" class = "p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+
+        <!-- Email -->
+        <label>Email : </label>
+        <input name = "email" required type = "email" class = "p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+
+        <!-- Password 1 -->
+        <label>Password : </label>
+        <input name = "password1" required type = "password" class = "p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+
+        <!-- Password 2 -->
+        <label>Confirm Password : </label>
+        <input name = "password2" required type = "password" class = "p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500" >
+        
+        <button type = "submit" class = "bg-emerald-600 p-2 rounded-xl cursor-pointer mt-3 hover:bg-emerald-500 transition">Singup</button>
+        </form>
+    </div>
+
+{% endblock  %}

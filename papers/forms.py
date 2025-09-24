@@ -1,0 +1,17 @@
+from django import forms
+from .models import QuestionPapers , ImportantTopics , Materials
+
+class QuestionPapersForm(forms.ModelForm):
+    class Meta:
+        model = QuestionPapers
+        fields = ['subject_name' , 'subject_code' , 'exam_type' , 'semester' , 'year' , 'file_choosen']
+
+class ImportantTopicsForm(forms.ModelForm):
+    class Meta:
+        model = ImportantTopics
+        fields = ['subject_name' , 'subject_code' , 'exam_type' , 'faculty_name' , 'file_choosen']
+
+class MaterialsForm(forms.ModelForm):
+    class Meta:
+        model = Materials
+        fields = ['subject_name' , 'subject_code' , 'exam_type' , 'faculty_name' , 'file_choosen']

@@ -1,0 +1,76 @@
+{% extends "template.html" %}
+
+{% block title %}PaperRepo | Study Materials{% endblock %}
+
+{% block content %}
+
+<div class="flex flex-col gap-6 mt-10">
+
+    <!-- Search Form -->
+    <form method="GET" action="{% url 'notes'%}" class="flex flex-col space-y-4">
+        <label for="name" class="text-2xl font-semibold text-gray-200">
+            Search for Study Materials:
+        </label>
+        <div class="flex gap-4">
+            <input name="course_code" id="subjectInput" placeholder="Course Code"
+                   value="{{ course_code }}"
+                   class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] max-w-md text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <select name="exam_type"
+                    class="p-4 rounded-lg border border-gray-600 bg-[#2a2a3d] max-w-md text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option disabled selected value="">Exam Type</option>
+                <option value="CAT I" {% if exam_type == 'CAT I' %}selected{% endif %}>CAT I</option>
+                <option value="CAT II" {% if exam_type == 'CAT II' %}selected{% endif %}>CAT II</option>
+                <option value="FAT" {% if exam_type == 'FAT' %}selected{% endif %}>FAT</option>
+            </select>
+            <button type="submit"
+                    class="font-semibold text-center bg-emerald-600 px-4 py-2 rounded-xl cursor-pointer hover:bg-emerald-500 transition flex items-center gap-2">
+                Search
+            </button>
+        </div>
+    </form>
+        <p class = "font-semibold">Please enter the course code (if specific) in capitals. else Results may not appear.</p>
+
+
+    <!-- Results Table -->
+    {% if materials %}
+        <div class="mt-8 p-6 bg-[#1e1e2e] rounded-2xl shadow-2xl text-gray-100 overflow-x-auto mb-4">
+            <h2 class="text-2xl font-semibold mb-4">Results :</h2>
+            <table class="min-w-full text-left border border-gray-700 rounded-lg">
+                <thead class="bg-[#221c35] text-teal-400">
+                    <tr>
+                        <th class="px-4 py-2 border-r border-gray-600">Sl No</th>
+                        <th class="px-4 py-2 border-r border-gray-600">Subject Name</th>
+                        <th class="px-4 py-2 border-r border-gray-600">Subject Code</th>
+                        <th class="px-4 py-2 border-r border-gray-600">Exam Type</th>
+                        <th class="px-4 py-2 border-r border-gray-600">Faculty</th>
+                        <th class="px-4 py-2 border-gray-600">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for material in materials %}
+                        <tr class="border-b border-gray-700 hover:bg-[#2a2235]">
+                            <td class="px-4 py-2 border-r border-gray-600">{{ forloop.counter }}</td>
+                            <td class="px-4 py-2 border-r border-gray-600">{{ material.subject_name }}</td>
+                            <td class="px-4 py-2 border-r border-gray-600">{{ material.subject_code }}</td>
+                            <td class="px-4 py-2 border-r border-gray-600">{{ material.exam_type }}</td>
+                            <td class="px-4 py-2 border-r border-gray-600">{{ material.faculty_name }}</td>
+                            <td class="px-4 py-2 flex gap-2 justify-center">
+                                <a href="{% url 'SearchStudyMaterials' material.material_id %}"
+                                   class="px-2 py-1 bg-blue-500 rounded text-white hover:bg-blue-400">View</a>
+                                <a href="{% url 'SearchStudyMaterials' material.material_id %}?download=true"
+                                   class="px-2 py-1 bg-green-500 rounded text-white hover:bg-green-400">Download</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        {% if course_code or exam_type %}
+            <p class="mt-6 text-gray-400">No study materials found.</p>
+        {% endif %}
+    {% endif %}
+
+</div>
+
+{% endblock %}
