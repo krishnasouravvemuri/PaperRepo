@@ -51,17 +51,17 @@ def Shownotes(request):
     materials = Materials.objects.filter(is_deleted=False).order_by('-material_id')
 
     course_code = request.GET.get("course_code", "")
-    exam_type = request.GET.get("exam_type", "")
+    topic_type = request.GET.get("topic_type", "")
 
     if course_code:
         materials = materials.filter(subject_code__icontains=course_code)
-    if exam_type:
-        materials = materials.filter(exam_type=exam_type)
+    if topic_type:
+        materials = materials.filter(topic_type=topic_type)
 
     return render(request, "notes.html", {
         "materials": materials,
         "course_code": course_code,
-        "exam_type": exam_type
+        "topic_type": topic_type
     })
 
 @login_required
@@ -131,7 +131,7 @@ def notesUpload(request):
                     study_material_title=form.cleaned_data['study_material_title'],
                     subject_name=form.cleaned_data['subject_name'],
                     subject_code=form.cleaned_data['subject_code'],
-                    exam_type=form.cleaned_data['exam_type'],
+                    topic_type=form.cleaned_data['topic_type'],
                     faculty_name=form.cleaned_data.get('faculty_name'),
                     file_choosen=f
                 )
@@ -164,7 +164,7 @@ def MyUploads(request, username):
 
     # Materials (exclude deleted)
     materials = Materials.objects.raw(
-        "SELECT study_material_title , material_id, subject_name, subject_code, exam_type, faculty_name "
+        "SELECT study_material_title , material_id, subject_name, subject_code, topic_type, faculty_name "
         "FROM papers_materials WHERE user_id = %s AND is_deleted = FALSE ORDER BY material_id DESC",
         [user_id]
     )
@@ -339,7 +339,7 @@ def ImportantTopicsSearch(request):
 
 def MaterialsSearch(request):
     course_code = request.GET.get("course_code")
-    exam_type = request.GET.get("exam_type")
+    topic_type = request.GET.get("topic_type")
 
     query = "SELECT * FROM papers_materials WHERE is_deleted = FALSE"
     params = []
@@ -347,16 +347,16 @@ def MaterialsSearch(request):
     if course_code:
         query += " AND subject_code LIKE %s"
         params.append(f"%{course_code}%")
-    if exam_type:
-        query += " AND exam_type = %s"
-        params.append(exam_type)
+    if topic_type:
+        query += " AND topic_type = %s"
+        params.append(topic_type)
 
     materials = Materials.objects.raw(query, params)
 
     return render(request, "notes.html", {
         "materials": materials,
         "course_code": course_code or "",
-        "exam_type": exam_type or ""
+        "topic_type": topic_type or ""
     })
 
 def SearchQuestionPapers(request, question_paper_id):
