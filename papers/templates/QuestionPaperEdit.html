@@ -23,7 +23,7 @@
           onsubmit="return confirm('Are you sure you want to update this Question Paper?');">
         {% csrf_token %}
         <label>Title:</label>
-        <input name="question_paper_title" required type="text" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <input name="question_paper_title" required value="{{ object.question_paper_title }}" type="text" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
         
         <label>Subject Name :</label>
         <input name="subject_name" type="text" value="{{ object.subject_name }}" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
@@ -32,7 +32,7 @@
         <input name="subject_code" type="text" value="{{ object.subject_code }}" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
         
         <label>Slot:</label>
-        <input name="exam_slot" maxlength="2" required type="text" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <input name="exam_slot" maxlength="2" required type="text" value="{{ object.exam_slot }}"class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
 
         <label>Exam Type :</label>
         <select name="exam_type" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
