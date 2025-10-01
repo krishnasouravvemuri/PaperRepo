@@ -15,7 +15,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-CHANGE-ME")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["3.7.254.69"]
+ALLOWED_HOSTS = ["3.7.254.69" , "https://paperrepo.23sou.xyz/"]
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
