@@ -8,8 +8,10 @@ SEM_CHOICES = [("FALL SEM", "FALL SEM"),("WIN SEM", "WIN SEM"),("Others", "Other
 class QuestionPapers(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question_paper_id = models.AutoField(primary_key=True)
+    question_paper_title = models.CharField(max_length=50)
     subject_name = models.CharField(max_length=200)
     subject_code = models.CharField(max_length=20)
+    exam_slot = models.CharField(max_length = 2)
     exam_type = models.CharField(max_length=20, choices=EXAM_CHOICES)
     semester = models.CharField(max_length=20, choices=SEM_CHOICES)
     year = models.IntegerField(default=2017)
@@ -22,6 +24,7 @@ class QuestionPapers(models.Model):
 class ImportantTopics(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     important_topic_id = models.AutoField(primary_key=True)
+    important_topic_title = models.CharField(max_length=50)
     subject_name = models.CharField(max_length=200)
     subject_code = models.CharField(max_length=20)
     exam_type = models.CharField(max_length=20, choices=EXAM_CHOICES)
@@ -35,6 +38,7 @@ class ImportantTopics(models.Model):
 class Materials(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     material_id = models.AutoField(primary_key=True)
+    study_material_title = models.CharField(max_length=50)
     subject_name = models.CharField(max_length=200)
     subject_code = models.CharField(max_length=20)
     exam_type = models.CharField(max_length=20, choices=EXAM_CHOICES)
