@@ -15,13 +15,6 @@
             <input name="course_code" id="subjectInput" placeholder="Course Code"
                    value="{{ course_code }}"
                    class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] max-w-md text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            <select name="exam_type"
-                    class="p-4 rounded-lg border border-gray-600 bg-[#2a2a3d] max-w-md text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                <option disabled selected value="">Exam Type</option>
-                <option value="CAT I" {% if exam_type == 'CAT I' %}selected{% endif %}>CAT I</option>
-                <option value="CAT II" {% if exam_type == 'CAT II' %}selected{% endif %}>CAT II</option>
-                <option value="FAT" {% if exam_type == 'FAT' %}selected{% endif %}>FAT</option>
-            </select>
             <button type="submit"
                     class="font-semibold text-center bg-emerald-600 px-4 py-2 rounded-xl cursor-pointer hover:bg-emerald-500 transition flex items-center gap-2">
                 Search
@@ -76,3 +69,4 @@
 </div>
 
 {% endblock %}
+
