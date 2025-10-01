@@ -5,13 +5,13 @@
 {% block navbar_right %}
     <a href="{% url 'UploadHome' username %}" class="hover:text-teal-300 cursor-pointer">Home</a>
     <a href="{% url 'MyUploads' username %}" class="hover:text-teal-300 cursor-pointer">My Uploads</a>
-    <a href="{% url 'home' %}" class="hover:text-red-400 cursor-pointer">Logout</a>
+    <a href="{% url 'logout' %}" class="hover:text-red-400 cursor-pointer">Logout</a>
 {% endblock %}
 
 {% block navbar_right_mobile %}
     <a href="{% url 'UploadHome' username %}" class="block py-2 px-4 hover:text-teal-300">Home</a>
     <a href="{% url 'MyUploads' username %}" class="block py-2 px-4 hover:text-teal-300">My Uploads</a>
-    <a href="{% url 'home' %}" class="block py-2 px-4 hover:text-red-400">Logout</a>
+    <a href="{% url 'logout' %}" class="block py-2 px-4 hover:text-red-400">Logout</a>
 {% endblock %}
 
 
@@ -117,7 +117,7 @@
                         <th class="px-4 py-2 border-r border-gray-600 text-left">Title</th>
                         <th class="px-4 py-2 border-r border-gray-600 text-left">Subject</th>
                         <th class="px-4 py-2 border-r border-gray-600 text-left">Code</th>
-                        <th class="px-4 py-2 border-r border-gray-600 text-left">Exam Type</th>
+                        <th class="px-4 py-2 border-r border-gray-600 text-left">Topic/Module</th>
                         <th class="px-4 py-2 border-r border-gray-600 text-left">Faculty</th>
                         <th class="px-4 py-2 border-gray-600">Actions</th>
                     </tr>
@@ -130,7 +130,7 @@
                         <td class="px-4 py-2 border-r border-gray-600">{{ i.study_material_title }}</td>
                         <td class="px-4 py-2 border-r border-gray-600">{{ i.subject_name }}</td>
                         <td class="px-4 py-2 border-r border-gray-600">{{ i.subject_code }}</td>
-                        <td class="px-4 py-2 border-r border-gray-600">{{ i.exam_type }}</td>
+                        <td class="px-4 py-2 border-r border-gray-600">{{ i.topic_type }}</td>
                         <td class="px-4 py-2 border-r border-gray-600">{{ i.faculty_name }}</td>
                         <td class="px-4 py-2 flex gap-2 justify-center">
                             <a href="{% url 'EditStudyMaterials' i.pk %}" class="px-2 py-1 bg-green-500 rounded text-white hover:bg-green-400">Edit</a>
