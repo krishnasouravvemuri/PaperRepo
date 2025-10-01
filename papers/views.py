@@ -74,6 +74,7 @@ def ImportantTopicsUpload(request):
             for f in files:
                 ImportantTopics.objects.create(
                     user=request.user,
+                    important_topic_title=form.cleaned_data['important_topic_title'],
                     subject_name=form.cleaned_data['subject_name'],
                     subject_code=form.cleaned_data['subject_code'],
                     exam_type=form.cleaned_data['exam_type'],
@@ -99,8 +100,10 @@ def QuestionPapersUpload(request):
             for f in files:
                 QuestionPapers.objects.create(
                     user=request.user,
+                    question_paper_title=form.cleaned_data['question_paper_title'],
                     subject_name=form.cleaned_data['subject_name'],
                     subject_code=form.cleaned_data['subject_code'],
+                    exam_slot=form.cleaned_data['exam_slot'],
                     exam_type=form.cleaned_data['exam_type'],
                     semester=form.cleaned_data['semester'],
                     year=form.cleaned_data['year'],
@@ -125,6 +128,7 @@ def notesUpload(request):
             for f in files:
                 Materials.objects.create(
                     user=request.user,
+                    study_material_title=form.cleaned_data['study_material_title'],
                     subject_name=form.cleaned_data['subject_name'],
                     subject_code=form.cleaned_data['subject_code'],
                     exam_type=form.cleaned_data['exam_type'],
@@ -146,21 +150,21 @@ def MyUploads(request, username):
 
     # Question Papers (exclude deleted)
     question_papers = QuestionPapers.objects.raw(
-        "SELECT question_paper_id, subject_name, subject_code, exam_type, semester "
+        "SELECT question_paper_title, question_paper_id, subject_name, subject_code, exam_slot, exam_type, semester "
         "FROM papers_questionpapers WHERE user_id = %s AND is_deleted = FALSE ORDER BY question_paper_id DESC",
         [user_id]
     )
 
     # Important Topics (exclude deleted)
     important_topics = ImportantTopics.objects.raw(
-        "SELECT important_topic_id, subject_name, subject_code, exam_type, faculty_name "
+        "SELECT important_topic_title , important_topic_id, subject_name, subject_code, exam_type, faculty_name "
         "FROM papers_importanttopics WHERE user_id = %s AND is_deleted = FALSE ORDER BY important_topic_id DESC",
         [user_id]
     )
 
     # Materials (exclude deleted)
     materials = Materials.objects.raw(
-        "SELECT material_id, subject_name, subject_code, exam_type, faculty_name "
+        "SELECT study_material_title , material_id, subject_name, subject_code, exam_type, faculty_name "
         "FROM papers_materials WHERE user_id = %s AND is_deleted = FALSE ORDER BY material_id DESC",
         [user_id]
     )
