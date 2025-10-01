@@ -5,13 +5,13 @@
 {% block navbar_right %}
     <a href="{% url 'UploadHome' username %}" class="hover:text-teal-300">Home</a>
     <a href="{% url 'MyUploads' username %}" class="hover:text-teal-300">My Uploads</a>
-    <a href="{% url 'home' %}" class="hover:text-red-400">Logout</a>
+    <a href="{% url 'logout' %}" class="hover:text-red-400">Logout</a>
 {% endblock %}
 
 {% block navbar_right_mobile %}
     <a href="{% url 'UploadHome' username %}" class="hover:text-teal-300 block text-right">Home</a>
     <a href="{% url 'MyUploads' username %}" class="hover:text-teal-300 block text-right">My Uploads</a>
-    <a href="{% url 'home' %}" class="hover:text-red-400 block text-right">Logout</a>
+    <a href="{% url 'logout' %}" class="hover:text-red-400 block text-right">Logout</a>
 {% endblock %}
 
 {% block container_class %}flex flex-col justify-center items-center{% endblock %}
