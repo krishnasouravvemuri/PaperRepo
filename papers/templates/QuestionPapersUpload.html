@@ -21,11 +21,18 @@
 <div class="w-[28rem] max-w-full mb-4 p-8 border border-gray-700 rounded-2xl bg-[#1e1e2e] shadow-2xl">
     <form method="POST" enctype="multipart/form-data" class="flex flex-col gap-y-4">
         {% csrf_token %}
+
+        <label>Title:</label>
+        <input name="question_paper_title" required type="text" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+
         <label>Subject Name:</label>
         <input name="subject_name" required type="text" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
 
         <label>Course Code (Enter the course code in capitals):</label>
         <input name="subject_code" required type="text" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+
+        <label>Slot:</label>
+        <input name="exam_slot" maxlength="2" required type="text" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
 
         <label>Exam Type:</label>
         <select name="exam_type" required class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
