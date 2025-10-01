@@ -22,6 +22,8 @@
     <form method="POST" class="flex flex-col space-y-4" 
           onsubmit="return confirm('Are you sure you want to update this Important Topic?');">
         {% csrf_token %}
+        <label>Title:</label>
+        <input name="important_topic_title" required type="text" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
         <label>Subject Name</label>
         <input name="subject_name" type="text" value="{{ object.subject_name }}" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
         <label>Subject Code</label>
