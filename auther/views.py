@@ -13,7 +13,7 @@ def home(request):
 def logout_user(request):
     logout(request)
     messages.success(request , "Logged out successfully!")
-    return redirect('/')
+    return redirect('home')
 
 def login_view(request):
     form = LoginForm()
@@ -63,3 +63,4 @@ def signup_view(request):
         form = SignupForm()
 
     return render(request, "signup.html", {"form": form})
+
