@@ -14,4 +14,5 @@ class ImportantTopicsForm(forms.ModelForm):
 class MaterialsForm(forms.ModelForm):
     class Meta:
         model = Materials
-        fields = ['study_material_title' , 'subject_name' , 'subject_code' , 'exam_type' , 'faculty_name' , 'file_choosen']
+        fields = ['study_material_title' , 'subject_name' , 'subject_code' , 'topic_type' , 'faculty_name' , 'file_choosen']
+
