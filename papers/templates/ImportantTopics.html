@@ -39,6 +39,7 @@
                 <thead class="bg-[#221c35] text-teal-400">
                     <tr>
                         <th class="px-4 py-2 border-r border-gray-600">Sl No</th>
+                        <th class="px-4 py-2 border-r border-gray-600">Title</th>
                         <th class="px-4 py-2 border-r border-gray-600">Subject Name</th>
                         <th class="px-4 py-2 border-r border-gray-600">Subject Code</th>
                         <th class="px-4 py-2 border-r border-gray-600">Exam Type</th>
@@ -50,6 +51,7 @@
                     {% for topic in topics %}
                         <tr class="border-b border-gray-700 hover:bg-[#2a2235]">
                             <td class="px-4 py-2 border-r border-gray-600">{{ forloop.counter }}</td>
+                            <td class="px-4 py-2 border-r border-gray-600">{{ topic.important_topic_title }}</td>
                             <td class="px-4 py-2 border-r border-gray-600">{{ topic.subject_name }}</td>
                             <td class="px-4 py-2 border-r border-gray-600">{{ topic.subject_code }}</td>
                             <td class="px-4 py-2 border-r border-gray-600">{{ topic.exam_type }}</td>
