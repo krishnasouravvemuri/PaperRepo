@@ -41,9 +41,10 @@ class Materials(models.Model):
     study_material_title = models.CharField(max_length=50)
     subject_name = models.CharField(max_length=200)
     subject_code = models.CharField(max_length=20)
-    exam_type = models.CharField(max_length=20, choices=EXAM_CHOICES)
+    topic_type = models.CharField(max_length=20)
     faculty_name = models.CharField(max_length=50 , null = True , blank = True)
     file_choosen = models.FileField(upload_to="Materials/")
     is_deleted = models.BooleanField(default=False)
     def __str__(self):
         return f"{self.subject_name} ({self.faculty_name})"
+
