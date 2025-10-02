@@ -31,12 +31,12 @@
         <label>Subject Code:</label>
         <input name="subject_code" type="text" value="{{ object.subject_code }}" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
         
-        <label>Exam Type:</label>
-        <select name="exam_type" required value = "{{ objects.exam_type }}" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            <option selected disabled>choose</option>
-            <option value="CAT I">CAT I</option>
-            <option value="CAT II">CAT II</option>
-            <option value="FAT">FAT</option>
+        <label>Exam Type :</label>
+        <select name="exam_type" class="p-3 rounded-lg border border-gray-600 bg-[#2a2a3d] text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option disabled>Choose</option>
+            <option value="CAT I" {% if object.exam_type == 'CAT I' %}selected{% endif %}>CAT I</option>
+            <option value="CAT II" {% if object.exam_type == 'CAT II' %}selected{% endif %}>CAT II</option>
+            <option value="FAT" {% if object.exam_type == 'FAT' %}selected{% endif %}>FAT</option>
         </select>
         
         <label>Faculty Name:</label>
@@ -45,5 +45,6 @@
     </form>
 </div>
 {% endblock %}
+
 
 
