@@ -35,7 +35,7 @@
                         <th class="px-4 py-2 border-r border-gray-600">Title</th>
                         <th class="px-4 py-2 border-r border-gray-600">Subject Name</th>
                         <th class="px-4 py-2 border-r border-gray-600">Subject Code</th>
-                        <th class="px-4 py-2 border-r border-gray-600">Exam Type</th>
+                        <th class="px-4 py-2 border-r border-gray-600">Topic/Module</th>
                         <th class="px-4 py-2 border-r border-gray-600">Faculty</th>
                         <th class="px-4 py-2 border-gray-600">Actions</th>
                     </tr>
@@ -47,7 +47,7 @@
                             <td class="px-4 py-2 border-r border-gray-600">{{ material.study_material_title }}</td>
                             <td class="px-4 py-2 border-r border-gray-600">{{ material.subject_name }}</td>
                             <td class="px-4 py-2 border-r border-gray-600">{{ material.subject_code }}</td>
-                            <td class="px-4 py-2 border-r border-gray-600">{{ material.exam_type }}</td>
+                            <td class="px-4 py-2 border-r border-gray-600">{{ material.topic_type }}</td>
                             <td class="px-4 py-2 border-r border-gray-600">{{ material.faculty_name }}</td>
                             <td class="px-4 py-2 flex gap-2 justify-center">
                                 <a href="{% url 'SearchStudyMaterials' material.material_id %}"
@@ -69,4 +69,5 @@
 </div>
 
 {% endblock %}
+
 
