@@ -15,7 +15,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-CHANGE-ME")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["15.207.221.147" , "paperrepo.23sou.xyz"]
+ALLOWED_HOSTS = ["15.207.221.147" , "paperrepo.23sou.xyz" , "paperrepo-vitap.vercel.app"]
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'auther',
     'papers',
 ]
+
+CSRF_TRUSTED_ORIGINS = ['https://paperrepo.23sou.xyz', 'https://paperrepo-vitap.vercel.app']
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
