@@ -1,0 +1,53 @@
+# ───── Secrets / env ─────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ───── Python / Django ─────
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+db.sqlite3
+db.sqlite3-journal
+staticfiles/
+media/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ───── Node / Next.js ─────
+node_modules/
+.next/
+out/
+dist/
+build/
+.turbo/
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.eslintcache
+
+# ───── Editors / OS ─────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ───── Logs / misc ─────
+*.log
+logs/
+.cache/
+tmp/
