@@ -1,0 +1,289 @@
+{
+  "info": {
+    "name": "PaperRepo API",
+    "description": "PaperRepo backend (Django + DRF). Cookie-based JWT auth. Base path /api/v2. Login sets an auth cookie; the same cookie authorizes all protected routes. Uploads are multipart/form-data with one or more `files`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1:8000/api/v2", "type": "string" },
+    { "key": "paper_id", "value": "", "type": "string" },
+    { "key": "topic_id", "value": "", "type": "string" },
+    { "key": "material_id", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_name\": \"Tester\",\n  \"user_email\": \"tester@ninestars.in\",\n  \"user_password\": \"testpass123\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/user_management/signup", "host": ["{{base_url}}"], "path": ["user_management", "signup"] }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_email\": \"tester@ninestars.in\",\n  \"user_password\": \"testpass123\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/user_management/login", "host": ["{{base_url}}"], "path": ["user_management", "login"] }
+          },
+          "description": "Sets the auth cookie. Postman stores it in the cookie jar and sends it on subsequent requests automatically."
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/user_management/me", "host": ["{{base_url}}"], "path": ["user_management", "me"] }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{base_url}}/user_management/logout", "host": ["{{base_url}}"], "path": ["user_management", "logout"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subject Management",
+      "item": [
+        {
+          "name": "List Subjects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/subject_management/", "host": ["{{base_url}}"], "path": ["subject_management", ""] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Question Paper Management",
+      "item": [
+        {
+          "name": "List Question Papers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/question_paper_management/?course_code=&exam_type=",
+              "host": ["{{base_url}}"],
+              "path": ["question_paper_management", ""],
+              "query": [
+                { "key": "course_code", "value": "", "description": "optional filter" },
+                { "key": "exam_type", "value": "", "description": "optional filter (CAT I | CAT II | FAT)" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Question Paper (upload)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "question_paper_title", "value": "Test Paper", "type": "text" },
+                { "key": "subject_code", "value": "CSE101", "type": "text" },
+                { "key": "subject_name", "value": "Intro CS", "type": "text" },
+                { "key": "question_paper_exam_slot", "value": "A1", "type": "text" },
+                { "key": "question_paper_exam_type", "value": "FAT", "type": "text", "description": "CAT I | CAT II | FAT" },
+                { "key": "question_paper_semester", "value": "FALL SEM", "type": "text", "description": "FALL SEM | WIN SEM | Others" },
+                { "key": "question_paper_year", "value": "2024", "type": "text", "description": "1990-2100" },
+                { "key": "files", "type": "file", "src": [], "description": "one or more files; required" }
+              ]
+            },
+            "url": { "raw": "{{base_url}}/question_paper_management/", "host": ["{{base_url}}"], "path": ["question_paper_management", ""] }
+          }
+        },
+        {
+          "name": "My Question Papers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/question_paper_management/my_uploads/", "host": ["{{base_url}}"], "path": ["question_paper_management", "my_uploads", ""] }
+          }
+        },
+        {
+          "name": "Get Question Paper File URL",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/question_paper_management/{{paper_id}}/file/", "host": ["{{base_url}}"], "path": ["question_paper_management", "{{paper_id}}", "file", ""] }
+          },
+          "description": "Returns a time-limited signed URL to download the stored file."
+        },
+        {
+          "name": "Update Question Paper",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question_paper_title\": \"Updated Paper\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/question_paper_management/{{paper_id}}/", "host": ["{{base_url}}"], "path": ["question_paper_management", "{{paper_id}}", ""] }
+          }
+        },
+        {
+          "name": "Delete Question Paper",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{base_url}}/question_paper_management/{{paper_id}}/", "host": ["{{base_url}}"], "path": ["question_paper_management", "{{paper_id}}", ""] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Important Topic Management",
+      "item": [
+        {
+          "name": "List Important Topics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/important_topic_management/", "host": ["{{base_url}}"], "path": ["important_topic_management", ""] }
+          }
+        },
+        {
+          "name": "Create Important Topic (upload)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "important_topic_title", "value": "Test Topic", "type": "text" },
+                { "key": "subject_code", "value": "CSE101", "type": "text" },
+                { "key": "subject_name", "value": "Intro CS", "type": "text" },
+                { "key": "important_topic_exam_type", "value": "CAT I", "type": "text", "description": "CAT I | CAT II | FAT" },
+                { "key": "faculty_name", "value": "Dr X", "type": "text", "description": "optional" },
+                { "key": "files", "type": "file", "src": [], "description": "one or more files; required" }
+              ]
+            },
+            "url": { "raw": "{{base_url}}/important_topic_management/", "host": ["{{base_url}}"], "path": ["important_topic_management", ""] }
+          }
+        },
+        {
+          "name": "My Important Topics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/important_topic_management/my_uploads/", "host": ["{{base_url}}"], "path": ["important_topic_management", "my_uploads", ""] }
+          }
+        },
+        {
+          "name": "Get Important Topic File URL",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/important_topic_management/{{topic_id}}/file/", "host": ["{{base_url}}"], "path": ["important_topic_management", "{{topic_id}}", "file", ""] }
+          }
+        },
+        {
+          "name": "Update Important Topic",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"important_topic_title\": \"Updated Topic\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/important_topic_management/{{topic_id}}/", "host": ["{{base_url}}"], "path": ["important_topic_management", "{{topic_id}}", ""] }
+          }
+        },
+        {
+          "name": "Delete Important Topic",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{base_url}}/important_topic_management/{{topic_id}}/", "host": ["{{base_url}}"], "path": ["important_topic_management", "{{topic_id}}", ""] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Material Management",
+      "item": [
+        {
+          "name": "List Materials",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/material_management/", "host": ["{{base_url}}"], "path": ["material_management", ""] }
+          }
+        },
+        {
+          "name": "Create Material (upload)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "material_title", "value": "Test Material", "type": "text" },
+                { "key": "subject_code", "value": "CSE101", "type": "text" },
+                { "key": "subject_name", "value": "Intro CS", "type": "text" },
+                { "key": "material_topic_type", "value": "Notes", "type": "text" },
+                { "key": "faculty_name", "value": "Dr Y", "type": "text", "description": "optional" },
+                { "key": "files", "type": "file", "src": [], "description": "one or more files; required" }
+              ]
+            },
+            "url": { "raw": "{{base_url}}/material_management/", "host": ["{{base_url}}"], "path": ["material_management", ""] }
+          }
+        },
+        {
+          "name": "My Materials",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/material_management/my_uploads/", "host": ["{{base_url}}"], "path": ["material_management", "my_uploads", ""] }
+          }
+        },
+        {
+          "name": "Get Material File URL",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{base_url}}/material_management/{{material_id}}/file/", "host": ["{{base_url}}"], "path": ["material_management", "{{material_id}}", "file", ""] }
+          }
+        },
+        {
+          "name": "Update Material",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"material_title\": \"Updated Material\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/material_management/{{material_id}}/", "host": ["{{base_url}}"], "path": ["material_management", "{{material_id}}", ""] }
+          }
+        },
+        {
+          "name": "Delete Material",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{base_url}}/material_management/{{material_id}}/", "host": ["{{base_url}}"], "path": ["material_management", "{{material_id}}", ""] }
+          }
+        }
+      ]
+    }
+  ]
+}
