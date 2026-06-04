@@ -25,6 +25,23 @@ class Semester(models.TextChoices):
     OTHERS = "Others", "Others"
 
 
+class ExamSlot(models.TextChoices):
+    A1 = "A1", "A1"
+    A2 = "A2", "A2"
+    B1 = "B1", "B1"
+    B2 = "B2", "B2"
+    C1 = "C1", "C1"
+    C2 = "C2", "C2"
+    D1 = "D1", "D1"
+    D2 = "D2", "D2"
+    E1 = "E1", "E1"
+    E2 = "E2", "E2"
+    F1 = "F1", "F1"
+    F2 = "F2", "F2"
+    G1 = "G1", "G1"
+    G2 = "G2", "G2"
+
+
 # ---------------------------------------------------------------------------
 # Users
 # ---------------------------------------------------------------------------
@@ -88,7 +105,7 @@ class QuestionPapers(models.Model):
     fk_user = models.ForeignKey(UserInfo, on_delete=models.CASCADE, db_column="user_id", related_name="question_papers")
     fk_subject = models.ForeignKey(Subjects, on_delete=models.PROTECT, db_column="subject_id", related_name="question_papers")
     question_paper_title = models.CharField(max_length=100)
-    question_paper_exam_slot = models.CharField(max_length=10)
+    question_paper_exam_slot = models.CharField(max_length=2, choices=ExamSlot.choices)
     question_paper_exam_type = models.CharField(max_length=20, choices=ExamType.choices)
     question_paper_semester = models.CharField(max_length=20, choices=Semester.choices)
     question_paper_year = models.IntegerField(default=2017)

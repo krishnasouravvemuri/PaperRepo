@@ -1,0 +1,52 @@
+# Render blueprint for the PaperRepo Django backend.
+# Frontend is deployed separately on Vercel (see docs/DEPLOY.md).
+# DB + storage stay on Supabase.
+services:
+  - type: web
+    name: paperrepo-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn config.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: AUTH_COOKIE_SECURE
+        value: "True"
+      - key: AUTH_COOKIE_SAMESITE
+        value: "Lax"
+      - key: JWT_EXPIRY_HOURS
+        value: "168"
+      - key: SUPABASE_DB_HOST
+        value: "aws-1-ap-northeast-1.pooler.supabase.com"
+      - key: SUPABASE_DB_NAME
+        value: "postgres"
+      - key: SUPABASE_DB_USER
+        value: "postgres.sswrxdfulqinyficvzgz"
+      - key: SUPABASE_DB_PORT
+        value: "6543"
+      - key: SUPABASE_DB_SSLMODE
+        value: "require"
+      - key: SUPABASE_URL
+        value: "https://sswrxdfulqinyficvzgz.supabase.co"
+      - key: SUPABASE_BUCKET
+        value: "papers"
+      - key: SUPABASE_SIGNED_URL_TTL
+        value: "3600"
+      # Set these as SECRETS in the Render dashboard (do NOT commit values):
+      #   SUPABASE_DB_PASSWORD
+      #   SUPABASE_SERVICE_KEY
+      #   CORS_ALLOWED_ORIGINS   (= your Vercel URL, e.g. https://paperrepo.vercel.app)
+      - key: SUPABASE_DB_PASSWORD
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false

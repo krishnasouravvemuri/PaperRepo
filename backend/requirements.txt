@@ -5,4 +5,5 @@ PyJWT>=2.7
 supabase>=2.4
 python-dotenv>=1.0
 daphne>=4.0
+gunicorn>=22.0
 psycopg2-binary>=2.9

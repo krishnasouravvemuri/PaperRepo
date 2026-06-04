@@ -1,7 +1,15 @@
 """Storage path builder. DB stores these paths only; never the file bytes."""
 
 import os
+import re
 import uuid
+
+
+def download_name(title: str, stored_path: str) -> str:
+    """Build a human-friendly download filename: sanitized title + original extension."""
+    ext = os.path.splitext(stored_path)[1].lower()
+    safe = re.sub(r'[\\/:*?"<>|]+', "_", (title or "download").strip()) or "download"
+    return f"{safe}{ext}"
 
 
 class BlobPaths:

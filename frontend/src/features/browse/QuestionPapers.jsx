@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { listQuestionPapers, getQuestionPaperFileUrl } from "../../api/questionPapers.js";
+import { downloadFromUrl } from "../../api/download.js";
+import Spinner from "../../components/Spinner.jsx";
 import { useToast } from "../../context/ToastContext.jsx";
 
 const EXAM_TYPES = ["CAT I", "CAT II", "FAT"];
@@ -11,6 +13,7 @@ export default function QuestionPapers() {
   const [filters, setFilters] = useState({ course_code: "", exam_type: "" });
   const [papers, setPapers] = useState([]);
   const [searched, setSearched] = useState(false);
+  const [downloadingId, setDownloadingId] = useState(null);
 
   const load = async (params) => {
     try {
@@ -32,18 +35,20 @@ export default function QuestionPapers() {
   };
 
   const openFile = async (id, download) => {
+    if (download && downloadingId) return; // ignore while a download is in flight
     try {
-      const { url } = await getQuestionPaperFileUrl(id);
       if (download) {
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "";
-        a.click();
+        setDownloadingId(id);
+        const { url, filename } = await getQuestionPaperFileUrl(id);
+        await downloadFromUrl(url, filename);
       } else {
+        const { url } = await getQuestionPaperFileUrl(id);
         window.open(url, "_blank", "noopener");
       }
     } catch (err) {
       notify(err.message || "Could not open file.", "error");
+    } finally {
+      if (download) setDownloadingId(null);
     }
   };
 
@@ -115,9 +120,16 @@ export default function QuestionPapers() {
                     </button>
                     <button
                       onClick={() => openFile(p.question_paper_id, true)}
-                      className="px-2 py-1 bg-green-500 rounded text-white hover:bg-green-400"
+                      disabled={downloadingId === p.question_paper_id}
+                      className="px-2 py-1 bg-green-500 rounded text-white hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-1"
                     >
-                      Download
+                      {downloadingId === p.question_paper_id ? (
+                        <>
+                          <Spinner /> Downloading…
+                        </>
+                      ) : (
+                        "Download"
+                      )}
                     </button>
                   </td>
                 </tr>

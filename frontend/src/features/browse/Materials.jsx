@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { listMaterials, getMaterialFileUrl } from "../../api/materials.js";
+import { downloadFromUrl } from "../../api/download.js";
+import Spinner from "../../components/Spinner.jsx";
 import { useToast } from "../../context/ToastContext.jsx";
 
 export default function Materials() {
@@ -9,6 +11,7 @@ export default function Materials() {
   const [filters, setFilters] = useState({ course_code: "", topic_type: "" });
   const [materials, setMaterials] = useState([]);
   const [searched, setSearched] = useState(false);
+  const [downloadingId, setDownloadingId] = useState(null);
 
   const load = async (params) => {
     try {
@@ -29,18 +32,20 @@ export default function Materials() {
   };
 
   const openFile = async (id, download) => {
+    if (download && downloadingId) return;
     try {
-      const { url } = await getMaterialFileUrl(id);
       if (download) {
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "";
-        a.click();
+        setDownloadingId(id);
+        const { url, filename } = await getMaterialFileUrl(id);
+        await downloadFromUrl(url, filename);
       } else {
+        const { url } = await getMaterialFileUrl(id);
         window.open(url, "_blank", "noopener");
       }
     } catch (err) {
       notify(err.message || "Could not open file.", "error");
+    } finally {
+      if (download) setDownloadingId(null);
     }
   };
 
@@ -102,9 +107,16 @@ export default function Materials() {
                     </button>
                     <button
                       onClick={() => openFile(m.material_id, true)}
-                      className="px-2 py-1 bg-green-500 rounded text-white hover:bg-green-400"
+                      disabled={downloadingId === m.material_id}
+                      className="px-2 py-1 bg-green-500 rounded text-white hover:bg-green-400 disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-1"
                     >
-                      Download
+                      {downloadingId === m.material_id ? (
+                        <>
+                          <Spinner /> Downloading…
+                        </>
+                      ) : (
+                        "Download"
+                      )}
                     </button>
                   </td>
                 </tr>

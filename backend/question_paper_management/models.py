@@ -4,7 +4,7 @@ from django.utils import timezone
 
 from core.client_model_app.models import QuestionPapers
 from src.common.blob import BlobClient
-from src.common.blob_paths import BlobPaths
+from src.common.blob_paths import BlobPaths, download_name
 from subject_management.models import SubjectManagement
 
 
@@ -72,7 +72,11 @@ class QuestionPaperManagement:
         ).first()
         if not paper:
             return 404, "Not found.", None
-        return 200, "OK", {"url": BlobClient.signed_url(paper.question_paper_file_path)}
+        name = download_name(paper.question_paper_title, paper.question_paper_file_path)
+        return 200, "OK", {
+            "url": BlobClient.signed_url(paper.question_paper_file_path, download=name),
+            "filename": name,
+        }
 
     @staticmethod
     def update(user_id: str, paper_id: str, payload: dict) -> tuple[int, str, dict | None]:

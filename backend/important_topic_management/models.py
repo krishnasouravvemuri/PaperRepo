@@ -4,7 +4,7 @@ from django.utils import timezone
 
 from core.client_model_app.models import Faculties, ImportantTopics
 from src.common.blob import BlobClient
-from src.common.blob_paths import BlobPaths
+from src.common.blob_paths import BlobPaths, download_name
 from subject_management.models import SubjectManagement
 
 
@@ -77,7 +77,11 @@ class ImportantTopicManagement:
         ).first()
         if not topic:
             return 404, "Not found.", None
-        return 200, "OK", {"url": BlobClient.signed_url(topic.important_topic_file_path)}
+        name = download_name(topic.important_topic_title, topic.important_topic_file_path)
+        return 200, "OK", {
+            "url": BlobClient.signed_url(topic.important_topic_file_path, download=name),
+            "filename": name,
+        }
 
     @staticmethod
     def update(user_id: str, topic_id: str, payload: dict) -> tuple[int, str, dict | None]:

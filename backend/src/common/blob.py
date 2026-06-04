@@ -29,10 +29,20 @@ class BlobClient:
         return path
 
     @classmethod
-    def signed_url(cls, path: str, ttl: int | None = None) -> str:
+    def signed_url(cls, path: str, ttl: int | None = None, download: bool | str = False) -> str:
         ttl = ttl or settings.SUPABASE_SIGNED_URL_TTL
         bucket = cls._get().storage.from_(settings.SUPABASE_BUCKET)
-        res = bucket.create_signed_url(path, ttl)
+        # download adds Content-Disposition: attachment so the browser downloads
+        # instead of rendering inline. Pass a string to set the download filename;
+        # True falls back to the stored object's basename.
+        name = None
+        if download:
+            name = download if isinstance(download, str) else path.rsplit("/", 1)[-1]
+        res = (
+            bucket.create_signed_url(path, ttl, options={"download": name})
+            if name
+            else bucket.create_signed_url(path, ttl)
+        )
         return res.get("signedURL") or res.get("signedUrl") or ""
 
     @classmethod
